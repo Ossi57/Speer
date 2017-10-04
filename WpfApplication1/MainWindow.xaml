@@ -1,0 +1,21 @@
+﻿<Controls:MetroWindow x:Class="WpfApplication1.MainWindow"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApplication1"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="69*"/>
+            <ColumnDefinition Width="448*"/>
+        </Grid.ColumnDefinitions>
+        <ListBox x:Name="listBox1" HorizontalAlignment="Left" Height="34" Margin="10,275,0,0" VerticalAlignment="Top" Width="497" SelectionChanged="listBox_SelectionChanged" Background="White" Grid.ColumnSpan="2"/>
+        <Button x:Name="btnEinlagern" Grid.ColumnSpan="2" Content="Einlagern" HorizontalAlignment="Left" Margin="50,219,0,0" VerticalAlignment="Top" Width="148" Height="51" Focusable="False" IsHitTestVisible="False" IsTabStop="False" Background="White" BorderBrush="Black"/>
+        <Button x:Name="btnAuslagern" Content="Auslagern" HorizontalAlignment="Left" Margin="262,219,0,0" VerticalAlignment="Top" Width="148" Height="51" Grid.Column="1" Focusable="False" IsHitTestVisible="False" IsTabStop="False" Background="White" BorderBrush="Black"/>
+        <DataGrid x:Name="dataGrid1" HorizontalAlignment="Left" Margin="46,8,0,0" VerticalAlignment="Top" Height="204" Width="438" Grid.ColumnSpan="2" SelectionChanged="dataGrid1_SelectionChanged"/>
+
+    </Grid>
+</Controls:MetroWindow>

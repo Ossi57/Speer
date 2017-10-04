@@ -32,12 +32,7 @@ namespace WpfApplication1
         public Dictionary<string, int> textNumber;
 
 
-        int currbestand;
-        int artikelid;
-        string artikelname;
-
-
-        public Window1()
+        public Window1(int currentbestand, int artikelid, string artikelname)
         {
             InitializeComponent();
             Form1_Load1();
@@ -53,18 +48,15 @@ namespace WpfApplication1
 
 
             MainWindow Main = new MainWindow();
-            int currbestand = Main.Getcurrbestand();
-            int artikelid = Main.GetArtikelid();
-            string artikelname = Main.GetArtikelname();
 
 
 
             ArtikelNrIns.Text = artikelid.ToString();
             ArtikelNameIns.Text = artikelname;
-            StuckzahlIns.Text = currbestand.ToString();
+            StuckzahlIns.Text = currentbestand.ToString();
 
 
-            MessageBox.Show(currbestand +" , "+artikelid+" , "+artikelname);
+            MessageBox.Show(currentbestand +" , "+artikelid+" , "+artikelname);
         }
 
         private void Form1_Load1()

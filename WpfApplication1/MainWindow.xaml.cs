@@ -33,9 +33,9 @@ namespace WpfApplication1
 
         bool selected = false;
 
-        public int currbestand = 0;
-        public int artikelid = 0;
-        public string artikelname;
+        public int currbestand { get; set; }
+        public int artikelid { get; set; }
+        public string artikelname { get; set; }
 
         public MainWindow()
         {
@@ -53,7 +53,7 @@ namespace WpfApplication1
                 from product in dataEntities.Artikel
                 select new { product.Id, product.artikelname, product.bestand };
 
-            
+
 
             dataGrid1.ItemsSource = query.ToList();
         }
@@ -96,7 +96,7 @@ namespace WpfApplication1
                     btnEinlagern.Background = new SolidColorBrush(Colors.LightSkyBlue);
                     Wait(0.3);
                     btnEinlagern.Background = new SolidColorBrush(Colors.White);
-                    Window1 Einlagern = new Window1();
+                    Window1 Einlagern = new Window1(currbestand,artikelid,artikelname);
                     Einlagern.Show();
                     this.Hide();
 
@@ -144,45 +144,25 @@ namespace WpfApplication1
 
             var item = dg.ItemContainerGenerator.ItemFromContainer(row);
 
-            string[] meineStrings = item.ToString().Split(new Char[] { ',', '=' ,'}'});
-
-            
-
-            this.artikelid = Int32.Parse(meineStrings[1]);
-            this.artikelname = meineStrings[3];
-            this.currbestand = Int32.Parse(meineStrings[5]);
+            string[] meineStrings = item.ToString().Split(new Char[] { ',', '=', '}' });
 
 
 
-            MessageBox.Show(artikelname.ToString());
+            artikelid = Int32.Parse(meineStrings[1]);
+            artikelname = meineStrings[3];
+            currbestand = Int32.Parse(meineStrings[5]);
+
+
+
+            //MessageBox.Show(artikelname.ToString());
 
 
 
             //MessageBox.Show(item.ToString().Trim(new Char[] { '{', '}', }));
         }
-        
-
-        public void Setcurrbestand(int currbestand)
-        {
-            this.currbestand = currbestand;
-        }
-
-        public int Getcurrbestand()
-        {
-            return currbestand;
-        }
-
-        public string GetArtikelname()
-        {
-            return artikelname;
-        }
-
-        public int GetArtikelid()
-        {
-            return this.artikelid;
-        }
-        
     }
 }
+
+
     
 

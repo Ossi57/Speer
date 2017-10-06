@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using Microsoft.Speech.Recognition;
 using System.Globalization;
 using MahApps.Metro.Controls;
+using System.Data.SqlClient;
 
 namespace WpfApplication1
 {
@@ -30,6 +31,7 @@ namespace WpfApplication1
         static SpeechRecognitionEngine sre = new SpeechRecognitionEngine(ci);
 
         public Dictionary<string, int> textNumber;
+        
 
 
         public Window1(int currentbestand, int artikelid, string artikelname)
@@ -48,15 +50,33 @@ namespace WpfApplication1
 
 
             MainWindow Main = new MainWindow();
-
-
-
             ArtikelNrIns.Text = artikelid.ToString();
             ArtikelNameIns.Text = artikelname;
             StuckzahlIns.Text = currentbestand.ToString();
 
 
-            MessageBox.Show(currentbestand +" , "+artikelid+" , "+artikelname);
+            //MessageBox.Show(currentbestand +" , "+artikelid+" , "+artikelname);
+
+            int abc = currentbestand - 1;
+
+            SqlConnection con = new SqlConnection(@"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = C:\Users\Oguzhan\Documents\GitHub\Speer\WpfApplication1\LagerDB.mdf; Integrated Security = True");
+            try
+            {
+
+                
+                con.Open();
+                string Query = "update into Artikel set bestand='" + abc + "', where id='" + artikelid + "'";
+                SqlCommand createCommand = new SqlCommand(Query, con);
+                createCommand.ExecuteNonQuery();
+                MessageBox.Show("abcd");
+                con.Close();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+
         }
 
         private void Form1_Load1()
@@ -219,11 +239,11 @@ namespace WpfApplication1
             if (textNumber.ContainsKey(txt))
             {
                 int value = textNumber[txt];
-                String ValueS = value.ToString();
+                int ValueS = value;
 
                 this.Dispatcher.Invoke(() =>
                 {
-                    Einlager_Menge.Text = ValueS;
+                    Einlager_Menge.Text = ValueS.ToString();
                     
                 }); // WinForm specific
                     //  Console.WriteLine(value);

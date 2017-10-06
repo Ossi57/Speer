@@ -31,7 +31,6 @@ namespace WpfApplication1
         static SpeechRecognitionEngine sre = new SpeechRecognitionEngine(ci);
 
         public Dictionary<string, int> textNumber;
-        
 
 
         public Window1(int currentbestand, int artikelid, string artikelname)
@@ -55,31 +54,33 @@ namespace WpfApplication1
             StuckzahlIns.Text = currentbestand.ToString();
 
 
+
             //MessageBox.Show(currentbestand +" , "+artikelid+" , "+artikelname);
 
-            int abc = currentbestand - 1;
+
+            int abc = currentbestand - currentbestand + 1;
+
 
             SqlConnection con = new SqlConnection(@"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = C:\Users\Oguzhan\Documents\GitHub\Speer\WpfApplication1\LagerDB.mdf; Integrated Security = True");
             try
             {
 
-                
+
                 con.Open();
-                string Query = "update into Artikel set bestand='" + abc + "', where id='" + artikelid + "'";
+                string Query = "update Artikel set bestand='" + abc + "' where id='" + artikelid + "' ";
                 SqlCommand createCommand = new SqlCommand(Query, con);
                 createCommand.ExecuteNonQuery();
                 MessageBox.Show("abcd");
                 con.Close();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
 
-
         }
 
-        private void Form1_Load1()
+    private void Form1_Load1()
         {
             textNumber = new Dictionary<string, int>();
             textNumber.Add("eins", 1);
@@ -227,7 +228,7 @@ namespace WpfApplication1
 
 
 
-        void sre_SpeechRecognized(object sender,
+        public void sre_SpeechRecognized(object sender,
           SpeechRecognizedEventArgs e)
         {
 

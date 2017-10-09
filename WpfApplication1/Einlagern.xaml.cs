@@ -237,6 +237,8 @@ namespace WpfApplication1
                                     
                     int counter = currentbestand + ValueS;
                     
+
+
                     SqlConnection con = new SqlConnection(@"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = C:\Users\Oguzhan\Documents\GitHub\Speer\WpfApplication1\LagerDB.mdf; Integrated Security = True");
                     try
                     {

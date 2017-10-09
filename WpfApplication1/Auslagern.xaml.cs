@@ -15,6 +15,7 @@ using Microsoft.Speech.Recognition;
 using System.Globalization;
 using MahApps.Metro.Controls;
 using System.Data.SqlClient;
+using System.Threading;
 
 namespace WpfApplication1
 {
@@ -212,11 +213,11 @@ namespace WpfApplication1
             if (textNumber.ContainsKey(txt))
             {
                 int value = textNumber[txt];
-                String ValueS = value.ToString();
+                ValueS = value;
 
                 this.Dispatcher.Invoke(() =>
                 {
-                    Auslager_Menge.Text = ValueS;
+                    Auslager_Menge.Text = ValueS.ToString();
                 }); // WinForm specific
                     //  Console.WriteLine(value);
             }
@@ -231,25 +232,33 @@ namespace WpfApplication1
 
 
                     int counter= currentbestand - ValueS;
-
-                    SqlConnection con = new SqlConnection(@"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = C:\Users\Oguzhan\Documents\GitHub\Speer\WpfApplication1\LagerDB.mdf; Integrated Security = True");
-                    try
+                    if (counter > 0)
                     {
-                        con.Open();
-                        string Query = "update Artikel set bestand='" + counter + "' where id='" + artikelid + "' ";
-                        SqlCommand createCommand = new SqlCommand(Query, con);
-                        createCommand.ExecuteNonQuery();
-                        //MessageBox.Show("abcd");
-                        con.Close();
+                        SqlConnection con = new SqlConnection(@"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = C:\Users\Oguzhan\Documents\GitHub\Speer\WpfApplication1\LagerDB.mdf; Integrated Security = True");
+                        try
+                        {
+                            con.Open();
+                            string Query = "update Artikel set bestand='" + counter + "' where id='" + artikelid + "' ";
+                            SqlCommand createCommand = new SqlCommand(Query, con);
+                            createCommand.ExecuteNonQuery();
+                            //MessageBox.Show("abcd");
+                            con.Close();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
+                        MainWindow Main = new MainWindow();
+                        Main.dataGrid1.ItemsSource = null;
+                        Main.Show();
+                        this.Hide();
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        MessageBox.Show(ex.Message);
+                        MessageBox.Show("Einlagerung nicht möglich. Neuer Lagerstand von " + counter + " ist nicht möglich.");
                     }
 
-                    MainWindow Main = new MainWindow();
-                    Main.Show();
-                    this.Hide();
+                    
 
                 }
                 else if (txt.Equals("zurück"))

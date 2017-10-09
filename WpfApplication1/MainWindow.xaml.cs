@@ -46,14 +46,16 @@ namespace WpfApplication1
             sre.LoadGrammarAsync(g_HelloGoodbye);
             sre.RecognizeAsync(RecognizeMode.Multiple);
 
+         
 
 
-            LagerDBEntities1 dataEntities = new LagerDBEntities1();
+            LagerDBEntities1 dataEntities = new LagerDBEntities1();          
             var query =
                 from product in dataEntities.Artikel
-                select new { product.Id, product.artikelname, product.bestand };
-            dataGrid1.ItemsSource = query.ToList();
+                select new { product.Id, product.artikelname, product.bestand };            
+            dataGrid1.ItemsSource = query.ToList();            
         }
+
 
         static Grammar GetHelloGoodbyeGrammar()
         {
@@ -96,6 +98,7 @@ namespace WpfApplication1
                     Window1 Einlagern = new Window1(currbestand,artikelid,artikelname);
                     Einlagern.Show();
                     this.Hide();
+                    
 
                 }
                 else if (txt.Equals("Auslagern") && selected == true)
@@ -106,8 +109,9 @@ namespace WpfApplication1
                     Wait(0.5);
                     btnAuslagern.Background = new SolidColorBrush(Colors.White);
                     Window2 Auslagern = new Window2(currbestand, artikelid, artikelname);
-                    Auslagern.Show();
+                    Auslagern.Show();                   
                     this.Hide();
+                    
                 }
             }
         }

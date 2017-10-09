@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using Microsoft.Speech.Recognition;
 using System.Globalization;
 using MahApps.Metro.Controls;
+using System.Data.SqlClient;
 
 namespace WpfApplication1
 {
@@ -28,10 +29,14 @@ namespace WpfApplication1
 
         static CultureInfo ci = new CultureInfo("de-DE");
         static SpeechRecognitionEngine sre = new SpeechRecognitionEngine(ci);
+        public int currentbestand;
+        public int artikelid;
+        public string artikelname;
+        public int ValueS;
 
         public Dictionary<string, int> textNumber;
 
-        public Window2()
+        public Window2(int currentbestand, int artikelid, string artikelname)
         {
             InitializeComponent(); InitializeComponent();
             Form1_Load1();
@@ -42,7 +47,14 @@ namespace WpfApplication1
             sre.LoadGrammarAsync(g_HelloGoodbye);
             sre.LoadGrammarAsync(g_stckZ);
             sre.RecognizeAsync(RecognizeMode.Multiple);
+            this.currentbestand = currentbestand;
+            this.artikelid = artikelid;
             // sre.RecognizeAsync() is in CheckBox event
+
+            A_ArtikelNrIns.Text = artikelid.ToString();
+            A_ArtikelNameIns.Text = artikelname;
+            A_StuckzahlIns.Text = currentbestand.ToString();
+
         }
 
         private void Form1_Load1()
@@ -216,6 +228,25 @@ namespace WpfApplication1
                     btnWeiter.Background = new SolidColorBrush(Colors.LightSkyBlue);
                     MainWindow.Wait(0.3);
                     btnWeiter.Background = new SolidColorBrush(Colors.White);
+
+
+                    int counter= currentbestand - ValueS;
+
+                    SqlConnection con = new SqlConnection(@"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = C:\Users\Oguzhan\Documents\GitHub\Speer\WpfApplication1\LagerDB.mdf; Integrated Security = True");
+                    try
+                    {
+                        con.Open();
+                        string Query = "update Artikel set bestand='" + counter + "' where id='" + artikelid + "' ";
+                        SqlCommand createCommand = new SqlCommand(Query, con);
+                        createCommand.ExecuteNonQuery();
+                        //MessageBox.Show("abcd");
+                        con.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
                     MainWindow Main = new MainWindow();
                     Main.Show();
                     this.Hide();

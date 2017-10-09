@@ -25,7 +25,10 @@ namespace WpfApplication1
     {
         static int[] array = Enumerable.Range(1, 100).ToArray();
 
-
+        public int currentbestand;
+        public int artikelid;
+        public string artikelname;
+        public int ValueS;
 
         static CultureInfo ci = new CultureInfo("de-DE");
         static SpeechRecognitionEngine sre = new SpeechRecognitionEngine(ci);
@@ -44,40 +47,14 @@ namespace WpfApplication1
             sre.LoadGrammarAsync(g_HelloGoodbye);
             sre.LoadGrammarAsync(g_stckZ);
             sre.RecognizeAsync(RecognizeMode.Multiple);
+            this.currentbestand = currentbestand;
+            this.artikelid = artikelid;
             // sre.RecognizeAsync() is in CheckBox event
 
-
-
-            MainWindow Main = new MainWindow();
             ArtikelNrIns.Text = artikelid.ToString();
             ArtikelNameIns.Text = artikelname;
             StuckzahlIns.Text = currentbestand.ToString();
-
-
-
             //MessageBox.Show(currentbestand +" , "+artikelid+" , "+artikelname);
-
-
-            int abc = currentbestand - currentbestand + 1;
-
-
-            SqlConnection con = new SqlConnection(@"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = C:\Users\Oguzhan\Documents\GitHub\Speer\WpfApplication1\LagerDB.mdf; Integrated Security = True");
-            try
-            {
-
-
-                con.Open();
-                string Query = "update Artikel set bestand='" + abc + "' where id='" + artikelid + "' ";
-                SqlCommand createCommand = new SqlCommand(Query, con);
-                createCommand.ExecuteNonQuery();
-                MessageBox.Show("abcd");
-                con.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
         }
 
     private void Form1_Load1()
@@ -240,7 +217,7 @@ namespace WpfApplication1
             if (textNumber.ContainsKey(txt))
             {
                 int value = textNumber[txt];
-                int ValueS = value;
+                ValueS = value;
 
                 this.Dispatcher.Invoke(() =>
                 {
@@ -256,7 +233,25 @@ namespace WpfApplication1
                     sre.RecognizeAsyncCancel();
                     btnWeiter.Background = new SolidColorBrush(Colors.LightSkyBlue);
                     MainWindow.Wait(0.3);
-                    btnWeiter.Background = new SolidColorBrush(Colors.White);
+                    btnWeiter.Background = new SolidColorBrush(Colors.White);                   
+                                    
+                    int counter = currentbestand + ValueS;
+                    
+                    SqlConnection con = new SqlConnection(@"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = C:\Users\Oguzhan\Documents\GitHub\Speer\WpfApplication1\LagerDB.mdf; Integrated Security = True");
+                    try
+                    {
+                        con.Open();
+                        string Query = "update Artikel set bestand='" + counter + "' where id='" + artikelid + "' ";
+                        SqlCommand createCommand = new SqlCommand(Query, con);
+                        createCommand.ExecuteNonQuery();
+                        //MessageBox.Show("abcd");
+                        con.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
                     MainWindow Main = new MainWindow();
                     Main.Show();
                     this.Hide();

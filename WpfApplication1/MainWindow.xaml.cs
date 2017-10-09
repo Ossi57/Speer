@@ -52,9 +52,6 @@ namespace WpfApplication1
             var query =
                 from product in dataEntities.Artikel
                 select new { product.Id, product.artikelname, product.bestand };
-
-
-
             dataGrid1.ItemsSource = query.ToList();
         }
 
@@ -108,7 +105,7 @@ namespace WpfApplication1
                     btnAuslagern.Background = new SolidColorBrush(Colors.LightSkyBlue);
                     Wait(0.5);
                     btnAuslagern.Background = new SolidColorBrush(Colors.White);
-                    Window2 Auslagern = new Window2();
+                    Window2 Auslagern = new Window2(currbestand, artikelid, artikelname);
                     Auslagern.Show();
                     this.Hide();
                 }

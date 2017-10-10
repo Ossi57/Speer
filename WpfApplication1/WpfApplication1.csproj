@@ -189,6 +189,8 @@
     <Resource Include="Ansichten\2ndFace\Einlagern_Banner.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Ansichten\2ndFace\anim_auslagern.gif" />
+    <Resource Include="Ansichten\2ndFace\anim_einlagern.gif" />
     <Content Include="LagerDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>LagerDB.edmx</DependentUpon>

@@ -53,7 +53,9 @@ namespace WpfApplication1
             var query =
                 from product in dataEntities.Artikel
                 select new { product.Id, product.artikelname, product.bestand };            
-            dataGrid1.ItemsSource = query.ToList();            
+            dataGrid1.ItemsSource = query.ToList();   
+            
+                     
         }
 
 
@@ -83,6 +85,7 @@ namespace WpfApplication1
         void sre_SpeechRecognized(object sender,
           SpeechRecognizedEventArgs e)
         {
+
             string txt = e.Result.Text;
             float conf = e.Result.Confidence;
             if (conf < 0.65) return;

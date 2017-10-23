@@ -204,8 +204,6 @@ namespace WpfApplication1
         void sre_SpeechRecognized(object sender,
           SpeechRecognizedEventArgs e)
         {
-
-
             string txt = e.Result.Text;
             float conf = e.Result.Confidence;
             if (conf < 0.65) return;
@@ -220,11 +218,8 @@ namespace WpfApplication1
                     Auslager_Menge.Text = ValueS.ToString();
                 }); // WinForm specific
                     //  Console.WriteLine(value);
-            }
-            else
+            } else if (txt.Equals("weiter") && Auslager_Menge.Text == "")
             {
-                if (txt.Equals("weiter"))
-                {
                     sre.RecognizeAsyncCancel();
                     btnWeiter.Background = new SolidColorBrush(Colors.LightSkyBlue);
                     MainWindow.Wait(0.3);
@@ -234,7 +229,7 @@ namespace WpfApplication1
                     int counter= currentbestand - ValueS;
                     if (counter > 0)
                     {
-                        SqlConnection con = new SqlConnection(@"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = C:\Users\Oguzhan\Documents\GitHub\Speer\WpfApplication1\LagerDB.mdf; Integrated Security = True");
+                        SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Hakan\Source\Repos\Speer\Speer\WpfApplication1\LagerDB.mdf;Integrated Security=True");
                         try
                         {
                             con.Open();
@@ -249,10 +244,10 @@ namespace WpfApplication1
                             MessageBox.Show(ex.Message);
                         }
                         MainWindow Main = new MainWindow();
-                        Main.dataGrid1.ItemsSource = null;
                         Main.Show();
                         this.Hide();
                     }
+
                     else
                     {
                         MessageBox.Show("Einlagerung nicht möglich. Neuer Lagerstand von " + counter + " ist nicht möglich.");
@@ -260,8 +255,7 @@ namespace WpfApplication1
 
                     
 
-                }
-                else if (txt.Equals("zurück"))
+                }else if (txt.Equals("zurück"))
                 {
                     sre.RecognizeAsyncCancel();
 
@@ -272,7 +266,7 @@ namespace WpfApplication1
                     Main.Show();
                     this.Hide();
                 }
-            }
+            
         }
 
         private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

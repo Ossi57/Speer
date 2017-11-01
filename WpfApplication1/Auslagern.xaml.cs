@@ -16,6 +16,7 @@ using System.Globalization;
 using MahApps.Metro.Controls;
 using System.Data.SqlClient;
 using System.Threading;
+using WpfAnimatedGif;
 
 namespace WpfApplication1
 {
@@ -36,6 +37,7 @@ namespace WpfApplication1
         public int ValueS;
 
         public Dictionary<string, int> textNumber;
+        private Image img;
 
         public Window2(int currentbestand, int artikelid, string artikelname)
         {
@@ -218,7 +220,7 @@ namespace WpfApplication1
                     Auslager_Menge.Text = ValueS.ToString();
                 }); // WinForm specific
                     //  Console.WriteLine(value);
-            } else if (txt.Equals("weiter") && Auslager_Menge.Text == "")
+            } else if (txt.Equals("weiter") && Auslager_Menge.Text != "")
             {
                     sre.RecognizeAsyncCancel();
                     btnWeiter.Background = new SolidColorBrush(Colors.LightSkyBlue);
@@ -229,7 +231,7 @@ namespace WpfApplication1
                     int counter= currentbestand - ValueS;
                     if (counter > 0)
                     {
-                        SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Hakan\Source\Repos\Speer\Speer\WpfApplication1\LagerDB.mdf;Integrated Security=True");
+                        SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\hakan\Source\Repos\Speer\WpfApplication1\LagerDB.mdf;Integrated Security=True");
                         try
                         {
                             con.Open();
@@ -243,7 +245,17 @@ namespace WpfApplication1
                         {
                             MessageBox.Show(ex.Message);
                         }
-                        MainWindow Main = new MainWindow();
+
+                    
+                    
+                    Window3 Pop = new Window3();
+                    Pop.Show();
+                    MainWindow.Wait(7.1);
+                    Pop.Close();
+
+
+
+                    MainWindow Main = new MainWindow();
                         Main.Show();
                         this.Hide();
                     }

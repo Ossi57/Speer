@@ -112,8 +112,8 @@ namespace WpfApplication1
                     Wait(0.5);
                     btnAuslagern.Background = new SolidColorBrush(Colors.White);
                     Window2 Auslagern = new Window2(currbestand, artikelid, artikelname);
-                    Auslagern.Show();                   
-                    this.Hide();
+                    Auslagern.Show();
+                    this.Close();
                     
                 }
             }

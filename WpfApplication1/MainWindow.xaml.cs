@@ -100,7 +100,7 @@ namespace WpfApplication1
                     btnEinlagern.Background = new SolidColorBrush(Colors.White);
                     Window1 Einlagern = new Window1(currbestand,artikelid,artikelname);
                     Einlagern.Show();
-                    this.Hide();
+                    this.Close();
                     
 
                 }

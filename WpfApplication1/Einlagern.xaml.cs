@@ -222,44 +222,45 @@ namespace WpfApplication1
                 this.Dispatcher.Invoke(() =>
                 {
                     Einlager_Menge.Text = ValueS.ToString();
-                    
+
                 }); // WinForm specific
                     //  Console.WriteLine(value);
-            }
-            else
-            {
-                if (txt.Equals("weiter"))
+            } else if (txt.Equals("weiter") && Einlager_Menge.Text != "") {
+                sre.RecognizeAsyncCancel();
+                btnWeiter.Background = new SolidColorBrush(Colors.LightSkyBlue);
+                MainWindow.Wait(0.3);
+                btnWeiter.Background = new SolidColorBrush(Colors.White);
+
+                int counter = currentbestand + ValueS;
+
+
+               
+               SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\hakan\Source\Repos\Speer\WpfApplication1\LagerDB.mdf;Integrated Security=True");
+                try
                 {
-                    sre.RecognizeAsyncCancel();
-                    btnWeiter.Background = new SolidColorBrush(Colors.LightSkyBlue);
-                    MainWindow.Wait(0.3);
-                    btnWeiter.Background = new SolidColorBrush(Colors.White);                   
-                                    
-                    int counter = currentbestand + ValueS;
-                    
-
-
-                    SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\hakan\Source\Repos\Speer\WpfApplication1\LagerDB.mdf;Integrated Security=True");
-                    try
-                    {
-                        con.Open();
-                        string Query = "update Artikel set bestand='" + counter + "' where id='" + artikelid + "' ";
-                        SqlCommand createCommand = new SqlCommand(Query, con);
-                        createCommand.ExecuteNonQuery();
-                        //MessageBox.Show("abcd");
-                        con.Close();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
-
-                    MainWindow Main = new MainWindow();
-                    Main.Show();
-                    this.Hide();
-
+                    con.Open();
+                    string Query = "update Artikel set bestand='" + counter + "' where id='" + artikelid + "' ";
+                    SqlCommand createCommand = new SqlCommand(Query, con);
+                    createCommand.ExecuteNonQuery();
+                    //MessageBox.Show("abcd");
+                    con.Close();
                 }
-                else if (txt.Equals("zurück"))
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+                EinlagerPop EPop = new EinlagerPop();
+                EPop.Show();
+                MainWindow.Wait(7.1);
+                EPop.Close();
+
+
+                MainWindow Main = new MainWindow();
+                Main.Show();
+                this.Hide();
+
+            }else if (txt.Equals("zurück"))
                 {
                     sre.RecognizeAsyncCancel();
                     btnZurück.Background = new SolidColorBrush(Colors.LightSkyBlue);
@@ -267,10 +268,10 @@ namespace WpfApplication1
                     btnZurück.Background = new SolidColorBrush(Colors.White);
                     MainWindow Main = new MainWindow();
                     Main.Show();
-                    this.Hide();
+                    this.Close();
                 }
             }
-        }
+       
 
         private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

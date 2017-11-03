@@ -114,9 +114,16 @@
     <Compile Include="Auslagern.xaml.cs">
       <DependentUpon>Auslagern.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EinlagerPop.xaml.cs">
+      <DependentUpon>EinlagerPop.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Window3.xaml.cs">
       <DependentUpon>Window3.xaml</DependentUpon>
     </Compile>
+    <Page Include="EinlagerPop.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

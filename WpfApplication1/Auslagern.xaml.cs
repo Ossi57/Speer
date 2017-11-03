@@ -248,10 +248,10 @@ namespace WpfApplication1
 
                     
                     
-                    Window3 Pop = new Window3();
-                    Pop.Show();
+                    Window3 APop = new Window3();
+                    APop.Show();
                     MainWindow.Wait(7.1);
-                    Pop.Close();
+                    APop.Close();
 
 
 

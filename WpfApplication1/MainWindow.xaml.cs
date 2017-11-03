@@ -160,6 +160,7 @@ namespace WpfApplication1
             var dg = sender as DataGrid;
             if (dg == null) return;
             var index = dg.SelectedIndex;
+
             //here we get the actual row at selected index
             DataGridRow row = dg.ItemContainerGenerator.ContainerFromIndex(index) as DataGridRow;
 

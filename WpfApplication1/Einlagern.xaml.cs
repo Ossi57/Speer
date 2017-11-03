@@ -173,7 +173,6 @@ namespace WpfApplication1
             return g_result;
         }
 
-
         public Grammar getStückzahl()
         {
             Choices ch_Stck = new Choices();

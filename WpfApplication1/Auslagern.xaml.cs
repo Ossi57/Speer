@@ -255,8 +255,7 @@ namespace WpfApplication1
                         Main.Show();
                         this.Hide();
 
-                    }
-
+                    }                
                     else
                     {
                         MessageBox.Show("Einlagerung nicht möglich. Neuer Lagerstand von " + counter + " ist nicht möglich.");

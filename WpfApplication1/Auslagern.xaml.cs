@@ -231,7 +231,7 @@ namespace WpfApplication1
                     int counter= currentbestand - ValueS;
                     if (counter > 0)
                     {
-                        SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\hakan\Source\Repos\Speer\WpfApplication1\LagerDB.mdf;Integrated Security=True");
+                        SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Oguzhan\Documents\GitHub\Speer\WpfApplication1\LagerDB.mdf;Integrated Security=True");
                         try
                         {
                             con.Open();
@@ -245,19 +245,16 @@ namespace WpfApplication1
                         {
                             MessageBox.Show(ex.Message);
                         }
-
-                    
                     
                     Window3 APop = new Window3();
                     APop.Show();
                     MainWindow.Wait(7.1);
                     APop.Close();
 
-
-
                     MainWindow Main = new MainWindow();
                         Main.Show();
                         this.Hide();
+
                     }
 
                     else

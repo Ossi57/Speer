@@ -17,6 +17,8 @@ using System.Globalization;
 using MahApps.Metro.Controls;
 using System.Threading;
 using System.Windows.Threading;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace WpfApplication1
 {
@@ -40,24 +42,38 @@ namespace WpfApplication1
         public MainWindow()
         {
             InitializeComponent();
+            LoadDataGrid();
             sre.SetInputToDefaultAudioDevice();
             sre.SpeechRecognized += sre_SpeechRecognized;
             Grammar g_HelloGoodbye = GetHelloGoodbyeGrammar();
             sre.LoadGrammarAsync(g_HelloGoodbye);
             sre.RecognizeAsync(RecognizeMode.Multiple);
-
-         
-
-
-            LagerDBEntities1 dataEntities = new LagerDBEntities1();          
-            var query =
-                from product in dataEntities.Artikel
-                select new { product.Id, product.artikelname, product.bestand };            
-            dataGrid1.ItemsSource = query.ToList();   
-            
-                     
+                                           
         }
 
+
+        public void LoadDataGrid()
+        {
+
+            SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Oguzhan\Documents\GitHub\Speer\WpfApplication1\LagerDB.mdf;Integrated Security=True");
+            SqlDataAdapter Query = new SqlDataAdapter(@"SELECT Id, artikelname, bestand FROM Artikel", con);
+            DataTable dt = new DataTable();
+
+            Query.Fill(dt);
+
+            dataGrid1.ItemsSource = null;
+            dataGrid1.ItemsSource = dt.DefaultView;
+
+            /*
+             * OLD DataGrid
+            LagerDBEntities1 dataEntities = new LagerDBEntities1();
+            var query =
+                from product in dataEntities.Artikel
+                select new { product.Id, product.artikelname, product.bestand };
+            dataGrid1.ItemsSource = null;
+            dataGrid1.ItemsSource = query.ToList();
+            */
+        }
 
         static Grammar GetHelloGoodbyeGrammar()
         {
@@ -138,6 +154,9 @@ namespace WpfApplication1
         public void dataGrid1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selected = true;
+
+            /*
+             *OLD SELECTION 
             var dg = sender as DataGrid;
             if (dg == null) return;
             var index = dg.SelectedIndex;
@@ -146,23 +165,36 @@ namespace WpfApplication1
 
             //here we get the actual data item behind the selected row
 
-            var item = dg.ItemContainerGenerator.ItemFromContainer(row);
+            var item = dg.ItemContainerGenerator.ItemFromContainer(row).ToString().Trim(new char[] { ' ' });
 
             string[] meineStrings = item.ToString().Split(new Char[] { ',', '=', '}' });
 
 
+            MessageBox.Show(item.ToString());
 
-            artikelid = Int32.Parse(meineStrings[1]);
+            artikelid = Int32.Parse(meineStrings[-1]);
             artikelname = meineStrings[3];
             currbestand = Int32.Parse(meineStrings[5]);
+            */
 
 
+            DataRowView oDataRowView = dataGrid1.SelectedItem as DataRowView;
+            string sValue = string.Empty;
 
-            //MessageBox.Show(artikelname.ToString());
+            if (oDataRowView != null)
+            {
+                artikelid = (int)oDataRowView.Row["Id"];
+                artikelname = oDataRowView.Row["artikelname"] as string;
+                currbestand = (int)oDataRowView.Row["bestand"];
+            }
+
+            /*
+             * TEST
+            MessageBox.Show(artikelid.ToString());
+            MessageBox.Show(artikelname);
+            MessageBox.Show(currbestand.ToString());*/
 
 
-
-            //MessageBox.Show(item.ToString().Trim(new Char[] { '{', '}', }));
         }
     }
 }

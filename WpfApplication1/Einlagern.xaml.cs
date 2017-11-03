@@ -235,7 +235,7 @@ namespace WpfApplication1
 
 
                
-               SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\hakan\Source\Repos\Speer\WpfApplication1\LagerDB.mdf;Integrated Security=True");
+               SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Oguzhan\Documents\GitHub\Speer\WpfApplication1\LagerDB.mdf;Integrated Security=True");
                 try
                 {
                     con.Open();

@@ -31,25 +31,41 @@ namespace WpfApplication1
 
         static CultureInfo ci = new CultureInfo("de-DE");
         static SpeechRecognitionEngine sre = new SpeechRecognitionEngine(ci);
-        public int currentbestand;
+
+        
+
+    public int currentbestand;
         public int artikelid;
         public string artikelname;
         public int ValueS;
+        public static int i = 0;
 
         public Dictionary<string, int> textNumber;
         private Image img;
 
         public Window2(int currentbestand, int artikelid, string artikelname)
         {
-            InitializeComponent(); InitializeComponent();
+            if (i != 0)
+            {
+                sre.RecognizeAsyncCancel();
+                
+                i++;
+            }
+
+            InitializeComponent();
             Form1_Load1();
+
+            
             sre.SetInputToDefaultAudioDevice();
+
             sre.SpeechRecognized += sre_SpeechRecognized;
             Grammar g_HelloGoodbye = GetHelloGoodbyeGrammar();
             Grammar g_stckZ = getStückzahl();
             sre.LoadGrammarAsync(g_HelloGoodbye);
             sre.LoadGrammarAsync(g_stckZ);
+
             sre.RecognizeAsync(RecognizeMode.Multiple);
+            
             this.currentbestand = currentbestand;
             this.artikelid = artikelid;
             // sre.RecognizeAsync() is in CheckBox event
@@ -222,6 +238,7 @@ namespace WpfApplication1
                     //  Console.WriteLine(value);
             } else if (txt.Equals("weiter") && Auslager_Menge.Text != "")
             {
+                    i++;
                     sre.RecognizeAsyncCancel();
                     btnWeiter.Background = new SolidColorBrush(Colors.LightSkyBlue);
                     MainWindow.Wait(0.3);
@@ -231,7 +248,7 @@ namespace WpfApplication1
                     int counter= currentbestand - ValueS;
                     if (counter > 0)
                     {
-                        SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Oguzhan\Documents\GitHub\Speer\WpfApplication1\LagerDB.mdf;Integrated Security=True");
+                        SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\WpfApplication1\LagerDB.mdf;Integrated Security=True");
                         try
                         {
                             con.Open();
@@ -253,7 +270,7 @@ namespace WpfApplication1
 
                     MainWindow Main = new MainWindow();
                         Main.Show();
-                        this.Hide();
+                        this.Close();
 
                     }                
                     else
@@ -265,14 +282,14 @@ namespace WpfApplication1
 
                 }else if (txt.Equals("zurück"))
                 {
+                    i++;
                     sre.RecognizeAsyncCancel();
-
                     btnZurück.Background = new SolidColorBrush(Colors.LightSkyBlue);
                     MainWindow.Wait(0.3);
                     btnZurück.Background = new SolidColorBrush(Colors.White);
                     MainWindow Main = new MainWindow();
                     Main.Show();
-                    this.Hide();
+                    this.Close();
                 }
             
         }

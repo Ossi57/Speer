@@ -54,8 +54,16 @@ namespace WpfApplication1
 
         public void LoadDataGrid()
         {
+            
+            String path = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+                
+            
 
-            SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Oguzhan\Documents\GitHub\Speer\WpfApplication1\LagerDB.mdf;Integrated Security=True");
+
+            MessageBox.Show(path);
+
+
+            SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename= C:\Users\hakan\Source\Repos\Speer\WpfApplication1\LagerDB.mdf;Integrated Security=True");
             SqlDataAdapter Query = new SqlDataAdapter(@"SELECT Id, artikelname, bestand FROM Artikel", con);
             DataTable dt = new DataTable();
 

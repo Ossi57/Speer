@@ -29,6 +29,7 @@ namespace WpfApplication1
         public int artikelid;
         public string artikelname;
         public int ValueS;
+        public static int i2 = 0;
 
         static CultureInfo ci = new CultureInfo("de-DE");
         static SpeechRecognitionEngine sre = new SpeechRecognitionEngine(ci);
@@ -40,6 +41,14 @@ namespace WpfApplication1
         {
             InitializeComponent();
             Form1_Load1();
+
+            if (i2 != 0)
+            {
+                sre.RecognizeAsyncCancel();
+
+                i2++;
+            }
+
             sre.SetInputToDefaultAudioDevice();
             sre.SpeechRecognized += sre_SpeechRecognized;
             Grammar g_HelloGoodbye = GetHelloGoodbyeGrammar();
@@ -225,6 +234,7 @@ namespace WpfApplication1
                 }); // WinForm specific
                     //  Console.WriteLine(value);
             } else if (txt.Equals("weiter") && Einlager_Menge.Text != "") {
+                i2++;
                 sre.RecognizeAsyncCancel();
                 btnWeiter.Background = new SolidColorBrush(Colors.LightSkyBlue);
                 MainWindow.Wait(0.3);
@@ -261,6 +271,7 @@ namespace WpfApplication1
 
             }else if (txt.Equals("zurück"))
                 {
+                    i2++;
                     sre.RecognizeAsyncCancel();
                     btnZurück.Background = new SolidColorBrush(Colors.LightSkyBlue);
                     MainWindow.Wait(0.3);
